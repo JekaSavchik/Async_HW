@@ -27,6 +27,11 @@ namespace Async_HW
             return result;
         }
 
+        public void OperationThread()
+        {
+            Console.WriteLine($"Thread_Factorial: {Operation()}");
+        }
+
         public async Task<long> OperationAsync() => await Task<long>.Factory.StartNew(Operation);
     }
 }

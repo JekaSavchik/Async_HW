@@ -17,7 +17,7 @@ namespace Async_HW
             while (!int.TryParse(Console.ReadLine(), out factorial) || factorial <= 0)
                 Console.Write("Не корректный ввод. Повторите попытку - ");
 
-            Console.WriteLine("Введите число из ряда Фебоначи");
+            Console.WriteLine("Введите число из ряда Фибоначи");
             while (!int.TryParse(Console.ReadLine(), out febonachi) || febonachi <= 0)
                 Console.Write("Не корректный ввод. Повторите попытку - ");
 
@@ -25,11 +25,20 @@ namespace Async_HW
             Factorial Fact = new Factorial(factorial);
             Task<long> tasc1 = Fact.OperationAsync();
             Console.WriteLine($"Thread Main - {Thread.CurrentThread.ManagedThreadId}");
-            tasc1.ContinueWith(t => Console.WriteLine($"Factorial: {t.Result}"));
+            tasc1.ContinueWith(t => Console.WriteLine($"Async_Factorial: {t.Result}"));
 
             Febonachi Feb = new Febonachi(febonachi);
             Task<int> tasc2 = Feb.OperationAsync();
-            tasc2.ContinueWith(t => Console.WriteLine($"Febonachi : {t.Result}"));
+            tasc2.ContinueWith(t => Console.WriteLine($"Async_Febonachi : {t.Result}"));
+
+            tasc1.Wait();
+            tasc2.Wait();
+
+            Thread myThread = new Thread(new ThreadStart(Fact.OperationThread));
+            myThread.Start();
+
+            myThread = new Thread(new ThreadStart(Feb.OperationThread));
+            myThread.Start();
 
 
             Console.ReadKey();

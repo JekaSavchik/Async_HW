@@ -50,6 +50,12 @@ namespace Async_HW
             return result;
         }
 
+        public void OperationThread()
+        {
+            Console.WriteLine($"Thread_Febonachi: {Operation()}");
+        }
+
+
         public async Task<int> OperationAsync() => await Task<int>.Factory.StartNew(Operation);
     }
 }
